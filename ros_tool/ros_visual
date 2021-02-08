@@ -1,0 +1,86 @@
+## Gezebo & RViz
+
+虽然从界面上来看，RViz和Gazebo非常相似，但实际上两者有着很大的不同，Gazebo实现的是仿真，提供一个虚拟的世界，RViz实现的是可视化，呈现接收到的信息。
+
+## dofnine-RViz操作
+
+启动launch
+
+下方Add添加Robotmodel
+
+![2020-01-19 18-54-23屏幕截图](https://i.loli.net/2020/12/08/iMxvWrpncdK9Ugy.png)
+
+Global options添加Fixed Frame，点击选择 base_link
+
+![image-20201208105811005](https://i.loli.net/2020/12/08/IQRX2muBxT3vbC6.png)
+
+dofnine5，彩色版本
+
+![image-20210106154932826](https://i.loli.net/2021/01/07/61bP29ZpawlGYiE.png)
+
+
+
+---
+
+## Gazebo物理仿真环境搭建
+
+### 配置机器人模型
+
+添加碰撞参数
+
+```xml
+    <collision>
+      <origin        xyz="0 0 0"        rpy="0 0 0" />
+      <geometry>        <mesh          filename="package://dofnine3/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+```
+
+添加gazebo标签
+
+```xml
+<gazebo reference="base_link">
+	<material>Gezebo/Blue</material>
+</gazebo>
+```
+
+添加传动装置
+
+```
+<transmission></transmission>
+```
+
+
+
+### 创建仿真环境
+
+```xml
+<launch>
+    <!--设置launch文件的参数-->
+    <arg name="paused" default="false">
+    
+    <!--设置gezebo仿真环境-->
+    <include file="paused" default="false">
+        <arg name="paused" default="false">
+    </include>
+    
+    <!--加载机器人模型-->
+    <node name="" pkg="" type="">
+    
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"></node>
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"></node>
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"></node> 
+
+</launch>
+```
+
+gazebo的操作逻辑，中键上滑是放大；
+
+添加大地，ground_plane，否则视角缩放容易飘；
+
+添加模型
+
+building editor
+
+snap mode 捕捉模式
+
